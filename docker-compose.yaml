@@ -4,8 +4,8 @@ services:
     build: .
     ports:
       - "8080:8080"
-  nats:
+  uploader-queue:
     image: nats:2.12.3-alpine3.22
-    container_name: nats
+    container_name: uploader-queue
     ports:
       - "4222:4222"
