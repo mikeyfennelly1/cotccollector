@@ -12,7 +12,9 @@ else
 fi
 cd "${BASEDIR}"
 
-source "${BASEDIR}"/.env
+source "${BASEDIR}"/../.env
+source "${BASEDIR}"/../scripts/helpers.sh
+
 SERVICE_NAME="collector"
 
 var_must_exist() {
