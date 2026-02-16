@@ -11,8 +11,6 @@ jobs:
     permissions:
       contents: write
       issues: write
-    outputs:
-      tag_name: ${{ steps.semantic.outputs.new_release_tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,7 +28,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
       - name: Print tag name
-        run: echo "The new tag is ${{ steps.semantic.outputs.new_release_tag }}"
+        run: echo "The new tag is v${{ steps.semantic.outputs.new_release_version }}"
+
+    outputs:
+      tag_name: ${{ steps.semantic.outputs.new_release_version }}
 
   build-and-push:
     needs: release
@@ -40,7 +41,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: ${{ needs.release.outputs.tag_name }}
+          ref: v${{ needs.release.outputs.tag_name }}
 
       - name: Load values workflow-values.yaml
         id: load_values
@@ -62,4 +63,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ needs.release.outputs.tag_name }}
+          tags: ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:v${{ needs.release.outputs.tag_name }}
