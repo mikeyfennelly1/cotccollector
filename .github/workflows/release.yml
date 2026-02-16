@@ -9,17 +9,27 @@ jobs:
   release:
     runs-on: ubuntu-latest
     outputs:
-      tag_name: ${{ steps.semver.outputs.tag }}
+      tag_name: ${{ steps.semantic.outputs.new_release_tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Create release
-        id: semver
-        uses: philippeloctaux/semver-release-action@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: '16'
+      - name: Create release via semver
+        id: semantic
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          semantic_version: 18
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+          # For other plugins, add them here
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-and-push:
     needs: release
