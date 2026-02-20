@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/compare/v1.1.0...v1.2.0) (2026-02-20)
+
+
+### Features
+
+* add connection name to nats connections via application.yml ([#10](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/issues/10)) ([673698c](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/commit/673698cbea5b4b51688640712289d50a6b777bcb))
+
 # [1.1.0](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/compare/v1.0.0...v1.1.0) (2026-02-20)
 
 
