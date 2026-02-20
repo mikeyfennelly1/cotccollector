@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/compare/v1.0.0...v1.1.0) (2026-02-20)
+
+
+### Features
+
+* retry connection to nats with exponential backoff ([#9](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/issues/9)) ([d3fe42e](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/commit/d3fe42e69f8ffcddfb2355f81d0bb1efdb2cead5))
+
 # 1.0.0 (2026-02-18)
 
 
