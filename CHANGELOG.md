@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/compare/v1.2.0...v1.3.0) (2026-03-04)
+
+
+### Features
+
+* add health endpoint and remove /sysinfo endpoint ([2b0c3cc](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/commit/2b0c3ccaa3b5efead6ccddd1b29776140e11c8ed))
+
 # [1.2.0](https://github.com/mikeyfennelly1/ise--y2--b3--project--collector/compare/v1.1.0...v1.2.0) (2026-02-20)
 
 
