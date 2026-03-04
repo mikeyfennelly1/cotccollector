@@ -9,13 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 @RestController
+@RequestMapping("/api/collector")
 public class EventReadingController {
     private final NatsProducer natsProducer;
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(EventReadingController.class);
@@ -29,7 +29,7 @@ public class EventReadingController {
 
     private static final Logger logger = LogManager.getLogger(EventReadingController.class);
 
-    @PostMapping("/sysinfo")
+    @PostMapping("/")
     public ResponseEntity<?> postEventReading(@RequestBody SysinfoMessage sysinfoMessage) {
         logger.info("received message={}", sysinfoMessage.toString());
         try {
@@ -45,5 +45,11 @@ public class EventReadingController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(sysinfoMessage);
+    }
+
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, String>> health() {
+        logger.debug("GET /api/collector/health - hit health endpoint");
+        return ResponseEntity.ok(Map.of("msg", "collector API is healthy"));
     }
 }
