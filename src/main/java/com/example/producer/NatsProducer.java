@@ -1,7 +1,7 @@
 package com.example.producer;
 
 import com.example.config.NatsConfiguration;
-import com.example.model.SysinfoMessage;
+import org.example.libb3project.dto.TimeSeriesMessageDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.nats.client.Connection;
 import org.slf4j.Logger;
@@ -26,13 +26,13 @@ public class NatsProducer {
         this.natsConnection = config.getConnection();
     }
 
-    public void publishSysinfoEvent(SysinfoMessage msg) throws JsonProcessingException, InterruptedException, TimeoutException {
-        log.debug("attempting to publish to NATS subject publishing to NATS subject");
-        String subjName = config.getSysinfoSubject();
+    public void publishTimeSeriesMsg(TimeSeriesMessageDTO msg, String subjName) throws JsonProcessingException, InterruptedException, TimeoutException {
+        log.debug("getting byte array from TimeSeriesMessageDTO");
         byte[] messageBytes = msg.getBytes();
+        log.debug("attempting to publish to NATS subject publishing to NATS subject");
         natsConnection.publish(subjName, messageBytes);
         log.trace("flushing connection to NATS");
         natsConnection.flush(Duration.ofMillis(100));
-        log.debug("Published: {} to {}", msg, config.getSysinfoSubject());
+        log.debug("Published: {} to {}", msg, subjName);
     }
 }
