@@ -1,6 +1,7 @@
 package com.example.controller;
 
-import com.example.model.SysinfoMessage;
+import jakarta.validation.Valid;
+import org.example.libb3project.dto.TimeSeriesMessageDTO;
 import com.example.producer.NatsProducer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.LogManager;
@@ -29,11 +30,11 @@ public class EventReadingController {
 
     private static final Logger logger = LogManager.getLogger(EventReadingController.class);
 
-    @PostMapping("/")
-    public ResponseEntity<?> postEventReading(@RequestBody SysinfoMessage sysinfoMessage) {
-        logger.info("received message={}", sysinfoMessage.toString());
+    @PostMapping("/{streamName}")
+    public ResponseEntity<?> postEventReading(@PathVariable String streamName, @RequestBody @Valid TimeSeriesMessageDTO timeSeriesMessage) {
+        logger.info("received message={}", timeSeriesMessage.toString());
         try {
-            natsProducer.publishSysinfoEvent(sysinfoMessage);
+            natsProducer.publishTimeSeriesMsg(timeSeriesMessage, streamName);
         } catch (JsonProcessingException jpe) {
             log.error(jpe.getMessage());
             return ResponseEntity.unprocessableEntity().body(jpe.getMessage());
@@ -44,7 +45,7 @@ public class EventReadingController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(sysinfoMessage);
+                .body(timeSeriesMessage);
     }
 
     @GetMapping("/health")
