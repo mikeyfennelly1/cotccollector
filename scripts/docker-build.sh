@@ -16,10 +16,12 @@ set -eou pipefail
 
 ./gradlew bootJar
 cp ./build/libs/*SNAPSHOT.jar ./app.jar
-IMAGE_NAME="mikeyfennelly/cotccollector:latest"
-docker build -t "${IMAGE_NAME}" .
+VERSION=$(cat VERSION | tr -d '[:space:]')
+IMAGE_NAME="mikeyfennelly/cotccollector:${VERSION}"
+docker build -t "${IMAGE_NAME}" -t "mikeyfennelly/cotccollector:latest" .
 
 docker login
 docker push "${IMAGE_NAME}"
+docker push "mikeyfennelly/cotccollector:latest"
 
 popd
